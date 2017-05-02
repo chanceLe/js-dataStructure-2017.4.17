@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js数据结构相关</title>
+</head>
+<body>
+    <script>
+
+        //快速排序法
+       function quick_sort(arr){
+           function sort(pre,end) {
+               var k = arr[pre],i=pre,j=end-1;
+             if ((end-pre) > 1) {
+               while (i < j) {
+                   for (;i<j;j--) {
+                       if (arr[j] < k) {
+                           arr[i++] = arr[j];
+                           break;
+                       }
+                   }
+                   for (; i < j; i++) {
+                       if (arr[i] > k) {
+                           arr[j--] = arr[i];
+                           break;
+                       }
+                   }
+               }
+
+                   arr[i] = k;
+                   sort(0, i);
+                   sort(i + 1, end);
+
+            }
+           }
+           sort(0,arr.length);
+           return arr;
+       }
+
+      console.log(quick_sort([5,2,9,8,7,3,6,4,0,1]));
+       console.log(quickSort([5,2,9,8,7,3,6,4,0,1]));
+
+
+        //  快速排序法
+       function quickSort(array){
+           function sort(prev, numsize){
+               var nonius = prev;
+               var j = numsize -1;
+               var flag = array[prev];
+               if ((numsize - prev) > 1) {
+                   while(nonius < j){
+                       for(; nonius < j; j--){
+                           if (array[j] < flag) {
+                               array[nonius++] = array[j];　//a[i] = a[j]; i += 1;
+                               break;
+                           };
+                       }
+                       for( ; nonius < j; nonius++){
+                           if (array[nonius] > flag){
+                               array[j--] = array[nonius];
+                               break;
+                           }
+                       }
+                   }
+                   array[nonius] = flag;
+                   sort(0, nonius);
+                   sort(nonius + 1, numsize);
+               }
+           }
+           sort(0, array.length);
+           return array;
+       }
+
+        //归并排序法
+
+        function mergeSort(arr){   // 自上而下的递归方法
+            var  len = arr.length;
+            if(len<2){
+                return arr;
+            }
+
+            var middle = Math.floor(len /2),
+                left = arr.slice(0,middle),
+                right = arr.slice(middle);
+
+            return merge(mergeSort(left),mergeSort(right));
+        }
+        function merge(left,right){
+            var result = [];
+            while(left.length && right.length){
+                if(left[0] <= right[0]){
+                    result.push(left.shift())
+                }else{
+                    result.push(right.shift());
+                }
+            }
+
+
+            while(left.length){
+                result.push(left.shift());
+            }
+            while(right.length){
+                result.push(right.shift());
+            }
+            return result;
+        }
+        console.log(mergeSort([5,2,9,8,7,3,6,4,0,1]));
+
+
+        //归并排序对数组内对象的属性进行排序
+
+        var merge_Sort = (function() {
+            // 合并
+            var _merge = function(left, right, prop) {
+                var result = [];
+
+                // 对数组内成员的某个属性排序
+                if (prop) {
+                    while (left.length && right.length) {
+                        if (left[0][prop] <= right[0][prop]) {
+                            result.push(left.shift());
+                        } else {
+                            result.push(right.shift());
+                        }
+                    }
+                } else {
+                    // 数组成员直接排序
+                    while (left.length && right.length) {
+                        if (left[0] <= right[0]) {
+                            result.push(left.shift());
+                        } else {
+                            result.push(right.shift());
+                        }
+                    }
+                }
+
+                while (left.length)
+                    result.push(left.shift());
+
+                while (right.length)
+                    result.push(right.shift());
+
+                return result;
+            };
+
+            var _mergeSort = function(arr, prop) { // 采用自上而下的递归方法
+                var len = arr.length;
+                if (len < 2) {
+                    return arr;
+                }
+                var middle = Math.floor(len / 2),
+                        left = arr.slice(0, middle),
+                        right = arr.slice(middle);
+                return _merge(_mergeSort(left, prop), _mergeSort(right, prop), prop);
+            };
+
+            return function(arr, prop, order) {
+                var result = _mergeSort(arr, prop);
+                if (!order || order.toLowerCase() === 'asc') {
+                    // 升序
+                    return result;
+                } else {
+                    // 降序
+                    var _ = [];
+                    result.forEach(function(item) {
+                        _.unshift(item);
+                    });
+                    return _;
+                }
+            };
+        })();
+        var arr = [{"name":"zhangsan","age":19},{"name":"lisi","age":20},{"name":"wangwu","age":15},{"name":"wangwu","age":14},{"name":"wangwu","age":17}]
+       console.log(merge_Sort(arr,"age"));
+
+
+
+        //插入排序
+
+        function insertSort(arr){
+            var len =arr.length,preIndex,current;
+            for(var i=1;i<len;i++){
+                preIndex = i-1;
+                current = arr[i];
+                while(preIndex >=0 && arr[preIndex] >current){
+                    arr[preIndex+1] = arr[preIndex];
+                    preIndex--;
+                }
+                arr[preIndex+1] = current;
+            }
+            return arr;
+        }
+      console.log(insertSort([5,2,9,8,7,3,6,4,0,1]))
+        //时间复杂度来说， 插入，冒泡，选择排序都在  n^2 ，希尔，归并，快速排序
+        // 堆排序都在n*log n,  计数排序，桶排序是n+k，基数排序是n*k；
+        //作为常用算法，归并要比快速排序稳定。
+    </script>
+</body>
+</html>

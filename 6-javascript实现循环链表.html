@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>循环链表</title>
+	</head>
+	<body>
+		<script>
+			function Node(ele){
+				this.ele = ele;
+				this.next = null;
+			}
+			function linkList(){
+				this.head = new Node("head");
+				this.head.next = this.head;
+				this.find = find;
+				this.insert = insert;
+				this.display = display;
+				this.findPrev = findPrev;
+				this.remove = remove;
+			}
+			
+			function display(){
+				var currNode = this.head;
+				while (currNode.next != null && currNode.next.ele != "head"){
+					console.log(currNode.next.ele);
+					currNode = currNode.next;
+				}
+			}
+			
+			function find(item){
+				var currNode = this.head;
+				while(currNode.ele != item  && currNode.next.ele != "head" ){
+					currNode = currNode.next;
+				}
+				return currNode;
+			}
+			
+			function insert(newEle,ele){
+				var newNode = new Node(newEle);
+				var current = this.find(ele);
+				newNode.next = current.next;
+				current.next = newNode;
+			}
+			
+			function findPrev(item){
+				var currNode = this.head;
+				while ((currNode.next != null) && (currNode.next.ele != item)){
+					currNode = currNode.next;
+				}
+				return currNode;
+			}
+			
+			function remove(item){
+				var prev = this.findPrev(item);
+				if(prev.next != null){
+					prev.next = prev.next.next;
+				}
+			}
+			
+			
+			
+			var obj = new linkList();
+			obj.insert("zhangsan","head");
+			obj.insert("lisi","zhangsan");
+			obj.insert("zhaowu","lisi");
+			obj.insert("wangliu","zhaowu");
+			obj.display();
+			console.log(obj.findPrev("zhaowu"),"zhaowu");
+			obj.remove("lisi");
+			obj.display();
+		</script>
+	</body>
+</html>

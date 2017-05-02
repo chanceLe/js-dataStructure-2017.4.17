@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>双向链表</title>
+	</head>
+	<body>
+		<script>
+			function Node(ele){
+				this.ele = ele;
+				this.prev = this.next = null;
+			}
+			
+			function linkList(){
+				this.head = new Node("head");
+				this.find = find;
+				this.insert = insert;
+				this.findLast = findLast;
+				this.display = display;
+				this.disReverse = disReverse;
+				this.remove = remove;
+				
+			}
+			function find(item){
+				var currNode = this.head;
+				while (currNode.ele != item){
+					currNode = currNode.next;
+				}
+				return currNode;
+			}
+			function insert(newEle,item){
+				var newNode = new Node(newEle);
+				var current = this.find(item);
+				newNode.next = current.next;
+				newNode.prev = current;
+				current.next = newNode;
+			}
+			
+			function display(){
+				var currNode = this.head;
+				while(currNode.next != null){
+					console.log(currNode.next.ele);
+					currNode = currNode.next;
+				}
+				return currNode;
+			}
+			
+			function findLast(){
+				var currNode = this.head;
+				while(currNode.next != null){
+					currNode = currNode.next;
+				}
+				return currNode;
+			}
+			
+			function remove(item){
+				var currNode = this.find(item);
+				if(currNode.next != null){
+					currNode.prev.next =currNode.next;
+					currNode.next.prev = currNode.prev;
+					currNode.next = null;
+					currNode.prev = null;
+				}
+			}
+			
+			function disReverse(){
+				var currNode = this.findLast();
+				while(currNode.prev != null ){
+					console.log(currNode.ele);
+					currNode = currNode.prev;
+				}
+			}
+			
+			
+			//测试
+			var obj = new linkList();
+			obj.insert("zhangsan","head");
+			obj.insert("lisi","zhangsan");
+			obj.insert("zhaowu","lisi");
+			obj.insert("wangliu","zhaowu");
+		  	console.log(obj.findLast());
+		  	obj.display();
+		  	obj.disReverse();
+		  	obj.remove("lisi");
+		  	obj.display();
+		</script>
+	</body>
+</html>

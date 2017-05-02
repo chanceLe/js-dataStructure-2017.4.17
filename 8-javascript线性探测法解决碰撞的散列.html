@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>线性探测法处理碰撞的散列</title>
+	</head>
+	<body>
+		<p>线性探测法隶属于开放寻址散列。当发生碰撞时，检查散列中的下一个位置是否为空。如果为空就将数据存入该位置，不为空继续查下去。</p>
+		<p>如果数组的大小是待存储数据个数的1.5倍，那么使用开链法，如果是两倍及以上，使用线性探测法。</p>
+		<script>
+			function HashTable(){
+				this.table = new Array(137);
+				this.values = [];
+				this.betterHash = betterHash;
+				this.showDistro = showDistro;
+				this.put = put;
+				this.get = get;
+			}
+
+			function betterHash(data){
+				const H =37;
+				var total = 0;
+				for(var i=0;i<data.length;i++){
+					total += H*total + data.charCodeAt(i);
+					
+				}
+				total %= this.table.length;
+				if(total <0){
+					total += this.table.length-1;
+				}
+				console.log(data+"->"+ total % this.table.length);
+				return  parseInt(total);
+			}
+			function put(key,data){
+				
+				//线性探测法
+				var pos = this.betterHash(key);
+				if(this.table[pos] == undefined){
+					this.table[pos] = key;
+					this.values[pos] = data;
+				}else{
+					while(this.table[pos] != undefined){
+						pos++;
+					}
+					this.table[pos] = key;
+					this.values[pos] = data;
+				}
+				console.log("values",this.values);
+				console.log("table",this.table);
+			}
+			function showDistro(){
+				for(var i = 0;i<this.table.length;i++){
+					if(this.table[i] != undefined){
+						console.log(this.table[i],":",this.table[i]);
+					}
+				}
+			}
+			function get(key){
+			    var hash = this.betterHash(key);
+			    if(hash >-1){
+			    	for(var i=hash;this.table[hash] != undefined;i++){
+			    		if(this.table[hash] == key){
+			    			return this.values[hash];
+			    		}
+			    	}
+			    }
+			    return undefined;
+			}
+			
+			
+			var obj = new HashTable();
+			obj.put("k1","zhangsan");
+			obj.put("k2","lisi");
+			obj.put("k3","javascript");
+			obj.showDistro();
+			console.log(obj.get("k3"));
+		</script>
+	</body>
+</html>

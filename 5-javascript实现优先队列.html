@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<script>
+			
+			//优先队列的实现
+			
+			function Person(name,code){
+				this.name = name;
+				this.code = code;
+			}
+			
+			function Queue(){
+				this.arr = [];
+				this.enqueue = enqueue;
+				this.dequeue = dequeue;
+				this.front = front;
+				this.back = back;
+				this.toString = toString;
+				this.empty = empty;
+			}
+			function enqueue(ele){
+				this.arr.push(ele);
+			}
+			function dequeue(){
+				var code = this.arr[0].code,value,index; 
+				for(var i=0;i<this.arr.length;i++){
+					if(code >this.arr[i].code){
+						index = i;    //数字越小优先级越高
+						code = this.arr[i].code;
+					}
+				}
+				value = this.arr[index];
+				this.arr.splice(index,1);
+				return value;
+			}
+			
+			function front(){
+				return this.arr[0];
+			}
+			function back(){
+				return this.arr[this.arr.length-1];
+			}
+			function toString(){
+				var retstr = '';
+				for(var i=0;i<this.arr.length;i++){
+					retstr += this.arr[i].name +" "+this.arr[i].code+",";
+				}
+				return retstr;
+			}
+			
+			function empty(){
+				return 	this.arr.length == 0  
+			}
+			
+			
+			//调用
+			var p = new Person("zhangsan","3")
+			var q = new Queue();
+			q.enqueue(p);
+			p = new Person("lisi","2");
+			q.enqueue(p);
+			p = new Person("zhaowu","1");
+			q.enqueue(p);
+			p = new Person("lisi","4");
+			q.enqueue(p);
+			
+			console.log(q.toString());
+			q.dequeue();
+			console.log(q.toString());
+			
+			q.dequeue();
+			console.log(q.toString());
+			q.dequeue();
+			console.log(q.toString());
+		</script>
+	</body>
+</html>

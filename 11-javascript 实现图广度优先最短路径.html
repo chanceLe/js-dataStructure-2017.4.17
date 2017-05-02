@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图的实现</title>
+	</head>
+	<body>		
+	  <script type="text/javascript">
+	
+		function Graph(v){
+			this.vertices = v;
+			this.edges = 0;
+			this.adj = [];
+			for(var i = 0; i<this.vertices;i++){
+				this.adj[i] = [];
+				// 原书有这句，多余  没什么用。
+//				this.adj[i].push("");
+			}
+			this.addEdge = addEdge;
+			this.toString = toString;
+			this.showGraph = showGraph;
+			
+			//记录已经访问过的顶点
+			this.marked = [];
+			for(var i = 0;i < this.vertices;i++){
+				this.marked[i] = false;
+			}
+//			this.dfs = dfs;
+			this.bfs = bfs;
+			
+			//保存从一个顶点到下一个顶点的所有边
+			this.edgeTo = [];
+			
+			this.pathTo = pathTo;
+			this.hasPathTo = hasPathTo;
+			
+		}
+		function addEdge(v,w){
+			this.adj[v].push(w);
+			this.adj[w].push(v);
+			this.edges++;
+		}
+		
+		function showGraph(){
+			for(var i =0;i < this.vertices;i++){
+				for(var j = 0;j < this.vertices;j++){
+					if(this.adj[i][j] != undefined){
+						console.log(i+"->"+this.adj[i][j])
+					}
+				}
+			}
+		}
+			
+		//广度优先
+		function bfs(s){
+			var queue = [];
+			this.marked[s] = true;
+			queue.push(s);
+			while(queue.length > 0){
+				var v = queue.shift();
+				if(v != undefined){
+					console.log("已访问 ："+v);
+				}
+				for(var k in this.adj[v]){			
+					var w = this.adj[v][k];
+					if(!this.marked[w]){
+						this.edgeTo[w] = v;
+						this.marked[w] = true;
+						queue.push(w);
+					}
+				}
+			}		
+		}
+		
+		function pathTo(v){
+			var source = 0;
+			if(!this.hasPathTo(v)){
+				return undefined;
+			}
+			var path = [];
+			for(var i = v;i != source;i=this.edgeTo[i]){
+				path.push(i);
+			}
+			path.push(source);
+			return path;
+		}
+		function hasPathTo(v){
+			return this.marked[v];
+		}
+		
+		var obj = new Graph(5);
+		obj.addEdge(0,1);
+		obj.addEdge(0,2);
+		obj.addEdge(1,3);
+		obj.addEdge(2,4);
+		obj.showGraph();
+		//深度优先搜索
+		console.log("------------")
+		obj.bfs(0);
+		var paths = obj.pathTo(3);
+		console.log(paths,"123");
+		while(paths.length >0){
+			if(paths.length >1){
+				console.log(paths.pop() + "-");
+			}else{
+				console.log(paths.pop());
+			}
+		}
+	  //打印结果 0-2-4  表示在这个图中 顶点0到顶点4的距离为2;
+	 </script>
+	</body>
+</html>
+

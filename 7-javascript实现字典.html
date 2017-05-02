@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function Dictionary(){
+				this.arr = new Array();
+				this.add = add;	
+				this.show = show;
+				this.remove = remove;
+				this.find = find;
+				this.length = length;
+			}
+			function add(key,value){
+				this.arr[key] = value;
+			}
+			function find(key){
+				return this.arr[key];
+			}
+			function remove(key){
+				delete this.arr[key];
+			}
+			function show(){
+				for (var key in this.arr){
+					console.log(key +" ->"+this.arr[key]);
+				}
+			}
+			
+			function length(){
+				var len=0;
+				for(var key in this.arr){
+					len++;
+				}
+				return len;
+			}
+			
+			function clear(){
+				for(var key in this.arr){
+					delete this.arr[key];
+				}
+			}
+			
+			var obj = new Dictionary();
+			obj.add("name","zhangsan");
+			obj.add("age","20");
+			obj.add("phone","130123")
+			
+			obj.show();
+			console.log(obj.length());
+			obj.remove("age");
+			obj.show();
+			console.log(obj.find("phone"));
+		</script>
+	</body>
+</html>

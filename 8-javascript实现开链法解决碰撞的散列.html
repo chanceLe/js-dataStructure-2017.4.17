@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>开链散列</title>
+	</head>
+	<body>
+		<script>
+			function HashTable(){
+				this.table = new Array(137);
+				this.betterHash = betterHash;
+				this.showDistro = showDistro;
+				this.put = put;
+				this.get = get;
+				this.buildChains = buildChains;
+			}
+
+			function betterHash(data){
+				const H =37;
+				var total = 0;
+				for(var i=0;i<data.length;i++){
+					total += H*total + data.charCodeAt(i);
+					
+				}
+				total %= this.table.length;
+				if(total <0){
+					total += this.table.length-1;
+				}
+				console.log(data+"->"+ total % this.table.length);
+				return  parseInt(total);
+			}
+			function put(key,data){
+				var pos = this.betterHash(key);
+				var index = 0;
+				if(this.table[pos][index] == undefined ){
+					this.table[pos][index+1] = data;
+					this.table[pos][0] = key;
+					index++;
+				}else{
+					while(this.table[pos][index] != undefined ){
+						index++;
+					}
+					this.table[pos][index+1] = data;
+				}
+			}
+			function showDistro(){
+				for(var i = 0;i<this.table.length;i++){
+					if(this.table[i][0] != undefined){
+						console.log(this.table[i][0],":",this.table[i]);
+					}
+				}
+			}
+			function get(key){
+				var index = 0;
+				var pos = this.betterHash(key);
+				if(this.table[pos][index] == key){
+					return this.table[pos][index+1];
+					index+=2;
+				}else{
+					while(this.table[pos][index] != key){
+						index += 2;
+					}
+					return this.table[pos][index+1];
+				}
+				return undefined;
+			}
+			function buildChains(){
+				for(var i=0;i<this.table.length;i++){
+					this.table[i] = new Array();
+				}
+			}
+			
+			
+			var obj = new HashTable();
+			obj.buildChains();
+			obj.put("k1","zhangsan");
+			obj.put("k2","lisi");
+			obj.put("k3","javascript");
+			obj.showDistro();
+			console.log(obj.get("k2"));
+		</script>
+	</body>
+</html>

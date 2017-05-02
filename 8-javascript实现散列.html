@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>散列</title>
+	</head>
+	<body>
+		<script>
+			function HashTable(){
+				this.table = new Array(137);
+				this.betterHash = betterHash;
+				this.showDistro = showDistro;
+				this.put = put;
+				this.get = get;
+			}
+			function betterHash(data){
+				const H =37;
+				var total = 0;
+				for(var i=0;i<data.length;i++){
+					total += H*total + data.charCodeAt(i);
+					
+				}
+				total %= this.table.length;
+				if(total <0){
+					total += this.table.length-1;
+				}
+				console.log(total,"total")
+				return  parseInt(total);
+			}
+			
+			function put(key,data){
+				var pos = this.betterHash(key);
+				this.table[pos] = data;
+			}
+			function showDistro(){
+				var n = 0;
+				for(var i = 0;i<this.table.length;i++){
+					if(this.table[i] != undefined){
+						console.log(i,":",this.table[i]);
+					}
+				}
+			}
+			function get(key){
+				return this.table[this.betterHash(key)];
+			}
+	
+			
+			
+			var obj = new HashTable();
+			obj.put("k1","zhangsan");
+			obj.put("k2","lisi");
+			obj.put("k3","javascript");
+			obj.showDistro();
+			console.log(obj.get("k3"));
+		</script>
+	</body>
+</html>

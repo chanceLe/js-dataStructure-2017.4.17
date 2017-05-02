@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>List实现</title>
+	</head>
+	<body>
+		<script>
+			/*列表的抽象数据类型定义：
+			    listSize  属性   列表中元素个数
+			    pos       属性   列表的当前位置
+			    length    属性   返回列表中元素的个数
+			    clear     方法   清空列表中的所有元素
+			    toString  方法   返回列表的字符串形式
+			    getElement方法   返回当前位置的元素
+			    insert    方法   在现有元素后插入新的元素
+			    append    方法   在列表的末尾添加新元素
+			    remove    方法   从列表中删除元素
+				front     方法   将列表的当前位置移动到第一元素
+				end       方法  将列表的当前位置移动到最后一个元素
+				prev	    方法	将当前位置上移一位
+				next      方法   将当前位置下移一位
+				currPos   方法    返回列表当前位置
+				moveTo    方法   将当前位置移动到指定位置
+ 			 */
+ 			
+ 			//实现列表类
+ 			function List(){
+ 				this.listSize = 0;
+ 			    this.pos = 0;
+ 			    this.arr = [];
+   			    this.clear = clear;
+ 			    this.find = find;
+ 			    this.toString = toString;
+   			    this.insert = insert;
+   			    this.append = append;
+ 			    this.remove = remove;
+   			    this.front = front;
+   			    this.end = end;
+   			    this.prev = prev;
+   			    this.next = next;
+   			    this.currPos = currPos;
+   			    this.moveTo = moveTo;
+   			    this.getElement = getElement;
+   			    this.length = length;
+   			    this.contans = contains;
+ 			}
+ 			
+ 			//append方法
+ 			function append(ele){
+ 				this.arr[this.listSize++] = ele;
+ 			}
+ 			
+ 			//查找元素的位置
+ 			function find(ele){
+ 				for(var i=0;i<this.arr.length;i++){
+ 					if(this.arr[i] == ele){
+ 						return i
+ 					}
+ 				}
+ 				return -1;
+ 			}
+ 			
+ 			//删除元素
+ 			function remove(ele){
+ 				var index = this.find(ele);
+ 				if(index >-1){
+ 					this.arr.splice(index,1);
+ 					this.listSize--;
+ 					return true
+ 				}
+ 				return false
+ 			}
+ 			
+ 			//列表长度
+ 			function length(){
+ 				return this.listSize;
+ 			}
+ 			
+ 			//显示列表中的元素
+ 			function toString(){
+ 				return this.arr;
+ 			}
+ 			
+ 			
+ 			var obj = new List();
+ 			obj.append("zhangsan");
+ 			obj.append("lisi");
+ 			obj.append("zhaowu");
+ 			console.log(obj.toString());
+ 			console.log(obj.length());
+ 			obj.remove("lisi");
+ 			console.log(obj.toString());
+ 			
+ 			//插入元素
+ 			function insert(ele,after){
+ 				var insertPos = this.find(after);
+ 				if(insertPos > -1){
+ 					this.arr.splice(insertPos+1,0,ele);
+ 					this.listSize++;
+ 					return true;
+ 				}
+ 				return false;
+ 			}
+ 			
+ 			//清空元素
+ 			function clear(){
+ 				delete this.arr;
+ 				this.arr = [];
+ 				this.listSize = this.pos = 0;
+ 			}
+ 			
+ 			//给定值是否在列表中
+ 			function contains(ele){
+ 				for(var i=0;i<this.arr.length;i++){
+ 					if(this.arr[i] == ele){
+ 						return true;
+ 					}
+ 				}
+ 				return false;
+ 			}
+ 			
+ 			//遍历列表
+ 			function front(){
+ 				this.pos = 0;
+ 			}
+ 			function end(){
+ 				this.pos = this.listSize - 1; 
+ 			}
+ 			function prev(){
+ 				if(this.pos>0){
+ 					--this.pos;
+ 				}
+ 			}
+ 			function next(){
+ 				if(this.pos < this.listSize - 1){
+ 					++this.pos;
+ 				}
+ 			}
+ 			function currPos(){
+ 				return this.pos;
+ 			}
+ 			function moveTo(position){
+ 				this.pos = position;
+ 			}
+ 			
+ 			function getElement(){
+ 				return this.arr[this.pos];
+ 			}
+ 			
+ 			
+ 			var names = new List();
+ 			names.append("zhangsan");
+ 			names.append("lisi");
+ 			names.append("wangwu");
+ 			names.append("zhaoliu");
+ 			
+ 			names.front();
+ 			console.log(names.getElement());
+ 			names.next();
+ 			console.log(names.getElement());
+ 			names.prev();
+ 			console.log(names.getElement());
+ 			
+ 			// 使用迭代器访问列表
+ 			for(names.front();names.currPos()<=names.length();names.next()){
+ 				console.log(names.getElement(),"正序");
+ 				
+ 				//由于prev()和 next() 做了判断，为避免死循环，这里也要做判断  下面也一样
+   				if(names.currPos() == names.length()-1)  break;
+ 			}
+ 			
+ 			for(names.end();names.currPos() >=0;names.prev()){
+ 				console.log(names.getElement(),"反序");
+				if(names.currPos() == 0)  break;
+ 			}
+ 			
+ 			
+ 			
+		</script>
+	</body>
+</html>

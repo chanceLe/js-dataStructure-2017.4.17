@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function Stack(){
+				this.arr = [];
+				this.top = 0;
+				this.push = push;
+				this.pop = pop;
+				this.peek = peek;
+				this.length = length;
+				this.clear = clear;
+			}
+			function push(ele){
+				this.arr[this.top++] = ele;
+			}
+			
+			function pop(){
+				var value = this.arr[this.top-1];
+				this.arr.pop();
+				this.top--;
+				return value;
+			}
+			
+			function peek(){
+				return this.arr[this.top-1];
+			}
+			function length(){
+				return this.top;
+			}
+			function clear(){
+				this.top = 0;
+				this.arr = [];
+			}
+			
+			
+			
+			
+			
+			var s = new Stack();
+			s.push("zhangsan");
+			s.push("lisi");
+			s.push("wangwu");
+			s.push("zhaoliu");
+			
+			console.log(s.length());
+			console.log(s.pop());
+			console.log(s.arr);
+			console.log(s.peek());
+			console.log(s.arr);
+			s.clear();
+			console.log(s.arr);
+			
+			
+			// 应用  将数字转换为二到九进制: 无法转换16进制
+			function mulBase(num,base){
+				var s = new Stack();
+				do{
+					s.push(num%base);
+					num = Math.floor(num /= base);
+				}while (num>0);
+				
+				var converted = '';
+				while(s.length() > 0 ){
+					converted += s.pop();
+				}
+				return converted;
+			}
+			
+			console.log(mulBase(11,3));
+			
+			
+			//判断字符串回文
+			function isPalindrome(word){
+				var s = new Stack();
+				for(var i=0;i<word.length;i++){
+					s.push(word[i]);
+				}
+				var rword ='';
+				while(s.length()>0){
+					rword += s.pop();
+				}
+				return word == rword;	
+			}
+			
+			console.log(isPalindrome("hello"));
+			console.log(isPalindrome("elle"));
+			
+			
+			//使用栈模拟递归
+			function fact(n){
+				var s = new Stack();
+				while(n>1){
+					s.push(n--);
+				}
+				var product = 1;
+				while(s.length() >0 ){
+					product *=s.pop();
+				}
+				return product;
+			}
+			
+			console.log(fact(5));
+		</script>
+	</body>
+</html>

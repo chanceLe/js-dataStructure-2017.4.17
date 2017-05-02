@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图的实现</title>
+	</head>
+	<body>		
+	  <script type="text/javascript">
+	
+		function Graph(v){
+			this.vertices = v;
+			this.edges = 0;
+			this.adj = [];
+			for(var i = 0; i<this.vertices;i++){
+				this.adj[i] = [];
+				// 原书有这句，多余  没什么用。
+//				this.adj[i].push("");
+			}
+			this.addEdge = addEdge;
+			this.toString = toString;
+			this.showGraph = showGraph;
+			
+			//记录已经访问过的顶点
+			this.marked = [];
+			for(var i = 0;i < this.vertices;i++){
+				this.marked[i] = false;
+			}
+			this.dfs = dfs;
+			this.bfs = bfs;		
+		}
+		function addEdge(v,w){
+			this.adj[v].push(w);
+			this.adj[w].push(v);
+			this.edges++;
+		}
+		
+		function showGraph(){
+			for(var i =0;i < this.vertices;i++){
+				for(var j = 0;j < this.vertices;j++){
+					if(this.adj[i][j] != undefined){
+						console.log(i+"->"+this.adj[i][j])
+					}
+				}
+			}
+		}
+		//深度优先搜索
+		function dfs(v){
+			this.marked[v] = true;
+			//输出一下 
+			if(this.adj[v] != undefined){
+				console.log("已访问 ："+v);
+				console.log(this.marked,"adj")
+			}
+			//原书写法   这里用for in 得到的只是顶点的索引,并且会把非整数索引也循环，这里有坑
+			/*
+		    for (var w in this.adj[v] ){	    	
+		    	if(!this.marked[this.adj[v][w]]){
+		    		this.dfs(this.adj[v][w]);
+		    	}
+		    }
+		    */
+
+		   for(var i = 0;i<this.adj[v].length;i++){
+		   		var w = this.adj[v][i];
+		   		if(!this.marked[w]){
+		    		console.log("123456")
+		    		this.dfs(w);
+		  		}
+			}
+		}				
+		//广度优先
+		function bfs(s){
+			var queue = [];
+			this.marked[s] = true;
+			queue.push(s);
+			while(queue.length > 0){
+				var v = queue.shift();
+				if(v != undefined){
+					console.log("已访问 ："+v);
+				}
+				for(var k in this.adj[v]){			
+					var w = this.adj[v][k];
+					if(!this.marked[w]){
+						this.marked[w] = true;
+						queue.push(w);
+					}
+				}
+			}		
+		}
+		
+		var obj = new Graph(5);
+		obj.addEdge(0,1);
+		obj.addEdge(0,2);
+		obj.addEdge(1,3);
+		obj.addEdge(2,4);
+		obj.showGraph();
+		//深度优先搜索
+//		obj.dfs(0);
+		console.log("------------")
+		obj.bfs(0);
+		
+		
+		//由于标记数组定义在对象里  所以在这儿不能同时调用深度优先和广度优先。。
+	 </script>
+	</body>
+</html>

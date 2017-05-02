@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript实现队列</title>
+	</head>
+	<body>
+		<script>	
+			function Queue(){
+				this.arr = [];
+				this.enqueue = enqueue;
+				this.dequeue = dequeue;
+				this.front = front;
+				this.back = back;
+				this.toString = toString;
+				this.empty = empty;
+			}
+			function enqueue(ele){
+				this.arr.push(ele);
+			}
+			function dequeue(){
+				return this.arr.shift();
+			}
+			
+			function front(){
+				return this.arr[0];
+			}
+			function back(){
+				return this.arr[this.arr.length-1];
+			}
+			function toString(){
+				var retstr = '';
+				for(var i=0;i<this.arr.length;i++){
+					retstr += this.arr[i] +" ";
+				}
+				return retstr;
+			}
+			
+			function empty(){
+				return 	this.arr.length == 0  
+			}
+			
+			
+			
+			//测试
+			var q = new Queue();
+			q.enqueue("zhangsan");
+			q.enqueue("lisi");
+			q.enqueue("zhaowu");
+			q.enqueue("wangliu");
+			console.log(q.toString());
+			console.log(q.dequeue());
+			console.log(q.toString());
+			console.log(q.empty());
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

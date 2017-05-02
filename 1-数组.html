@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        //数组浅复制：指向的是同一个对象，对象变化时，他们都变化。
+        var numbers = [1,2,3];
+        var num = numbers;
+        console.log(num);
+        console.log(numbers);
+        numbers[1] = 4;
+        console.log(num[1]);
+
+        //数组深复制：把数组中的每个元素都复制到新数组中
+        function Copy(arr1,arr2){
+            for(var i=0;i<arr1.length;i++){
+                arr2[i]=arr1[i];
+            }
+            return arr2;
+        }
+		
+		//数组几个可变方法：  unshift() 添加元素到数组开头    push()  添加元素到数组尾  pop()删除最后一个元素  shift()  删除数组第一个元素
+		
+		var arr = [1,2,3,4,5];
+		arr.unshift(6);
+		console.log("unshift",arr);
+		var arr = [1,2,3,4,5];
+		arr.shift();
+		console.log("shift",arr);
+		var arr = [1,2,3,4,5];
+		arr.push(6);
+		console.log("push",arr);
+		
+		var arr = [1,2,3,4,5];
+		arr.pop();
+		console.log("pop",arr);
+		
+		
+		
+		//数组排序    sort()  和  sort(function) ，reverse();
+		function compare(num1,num2){
+			return num1-num2;
+		}
+		var arr = [1,3,100,6,50];
+//		arr.sort();//这个排序默认以字符串的形式排列  所以数字有误差  可以加个比较函数  实现数字排序。
+        arr.sort(compare);
+		console.log("sortarr",arr);
+		
+		arr .reverse();
+		console.log(arr,"reverse");
+		
+		//返回索引   ：  indexOf()  和 lastIndexOf()
+		var arr = [1,2,2,3];
+		console.log(arr.indexOf(2));
+		console.log(arr.indexOf(4));   // 找不到 返回-1
+		console.log(arr.lastIndexOf(2));  // 返回数组中跟参数相同的所有元素中的最后一个索引。
+		
+		//数组字符串表示  join()  和  toString()方法
+		var  arr = ['zhangsan','lisi','zhaowu','wangliu'];
+		console.log(arr.join());
+		console.log(arr.toString());  //返回的结果是一样的，逗号分隔的字符串.
+		
+		//数组生成数组  ：concat()  splice()
+		var arr1 = ['hello','javascript'],
+			arr2 = ['name','class'];
+		console.log(arr1.concat(arr2));
+		
+		var arr = ['hello','this',"is",'splice'];
+		 console.log(arr.splice(1,3));
+		 console.log(arr);  //切割完   数组就变成剩下的元素组成的数组
+		 
+		 
+		 //从数组中间位置添加  删除元素  ：splice(a,b,value)   a :起始索引  b 要截取（删除）的元素个数   value，要添加的元素,可以是多个，依次逗号隔开。
+		 var arr= [1,2,3,100,200,4,5];
+		 arr.splice(3,2);
+		 console.log(arr);  //完成删除
+		 
+		 var arr = [1,2,3,4,5];
+		 arr.splice(3,0,100,200);  //插入的值依次逗号隔开
+		 console.log(arr);
+		
+		
+		//迭代器方法
+		//不生成新数组的： forEach(function)  接受一个函数，对每个元素进行迭代， 
+	    //             every(function) 返回一个布尔值，方法作用在每个元素上都返回true，every(function) 才返回true
+	    //             some(function)  与every(function ) 类似，但只要有一个返回true，some就返回true。
+ 	    //             reduce(function)   迭代累加, 也可以连接成字符串，  还可以用 reduceRight(function)方法进行反转
+ 	    
+ 	    //forEach(function)
+	    var arr = [1,2,3,4,5,6,7,8,9];
+	    function print(num){
+	    	console.log(num,num*num);
+	    }
+	    arr.forEach(print);
+	    
+	    //every(function)，some(function)
+	    var arr = [4,5,6,7,8,9];
+	    var bool = arr.some(function(num){ 
+	//  var bool = arr.every(function(num){
+	    	console.log(num>5);
+	        return	num>5 
+	    });
+	    console.log(bool);
+	    
+	    //reduce(function)
+	    var arr = [1,2,3,4];
+	    function add(num1,num2){
+	    	return num1 + num2;
+	    }
+	    console.log(arr.reduce(add));  //10
+	   
+	   
+	   //生成新数组迭代方法：map(function), filter(function)
+	   //map
+	   var arr = ["hello","javascript","function"];
+	   function first(value){
+	   		return  value[0];
+	   }
+	   console.log(arr.map(first).join(''));
+       
+       //filter:参数函数需要返回布尔值，结果是满足条件的所有元素列表。  相当于过滤器。也可以用来过滤字符串数组。
+       var arr = [1,2,3,4,5,6,7,8];
+       var res = arr.filter(function(num){
+       	   return num >5
+       })
+       console.log("res",res);   //6，7，8
+       
+       //获取数组所有key值
+       var arr=new Array();
+			arr["name"] = "张三";
+			arr["age"] = "20";
+			
+			console.log(Object.keys(arr));
+    </script>
+</body>
+</html>
